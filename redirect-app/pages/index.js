@@ -4,15 +4,12 @@ export default function Home() {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    // Attempt to extract email from URL hash or query (if present)
     let extracted = "";
 
     if (typeof window !== "undefined") {
-      // Query string first
       const params = new URLSearchParams(window.location.search);
       extracted = params.get("email") || params.get("smn") || "";
 
-      // Hash fallback (#email)
       if (!extracted && window.location.hash) {
         try {
           extracted = decodeURIComponent(
@@ -30,12 +27,8 @@ export default function Home() {
     }
   }, []);
 
-  function normalizeEmail(value) {
-    return value.trim().toLowerCase();
-  }
-
   function redirect(value) {
-    const clean = normalizeEmail(value);
+    const clean = value.trim().toLowerCase();
 
     if (!clean || !clean.includes("@")) {
       window.location.href = "/api/redirect";
@@ -72,8 +65,6 @@ export default function Home() {
     </main>
   );
 }
-
-/* ================= STYLES ================= */
 
 const styles = {
   main: {
